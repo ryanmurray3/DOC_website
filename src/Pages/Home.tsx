@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Event } from "@/entities/Event";
 import { Testimonial } from "@/entities/Testimonial";
@@ -12,7 +13,7 @@ export default function Home() {
   const [featuredEvents, setFeaturedEvents] = useState([]);
   const [recentTestimonials, setRecentTestimonials] = useState([]);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-  const videoRef = useRef<HTMLIFrameElement>(null);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     const fetchPageData = async () => {
@@ -89,7 +90,7 @@ export default function Home() {
             <iframe
               ref={videoRef}
               className="w-full h-full"
-              src={`https://youtu.be/Gl6rC721ZGA?si=SWJlfGOR-d6WBKJF?autoplay=${isVideoPlaying ? 1 : 0}&rel=0&controls=1`}
+              src={`https://www.youtube.com/embed/Gl6rC721ZGA?autoplay=${isVideoPlaying ? 1 : 0}&rel=0&controls=1`}
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
