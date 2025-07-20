@@ -16,3 +16,4 @@ interface CoreValue {
 
 export default function About() {
 // ... keep existing code
+}

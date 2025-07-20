@@ -21,3 +21,4 @@ interface DonationType {
 
 export default function Donate() {
 // ... keep existing code
+}
