@@ -1,25 +1,27 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { Event } from "@/entities/Event";
-import { Testimonial } from "@/entities/Testimonial";
+import { Event } from "@/Entities/Event";
+import { TestimonialService, TestimonialType } from "@/Entities/Testimonial";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Heart, Calendar, Users, ArrowRight, Play, Pause, Sparkles, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
-import { createPageUrl } from "@/utils";
+import { createPageUrl } from "@/libs/utils";
 import { motion } from "framer-motion";
 
 export default function Home() {
-  const [featuredEvents, setFeaturedEvents] = useState([]);
-  const [recentTestimonials, setRecentTestimonials] = useState([]);
+  const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
+  const [recentTestimonials, setRecentTestimonials] = useState<TestimonialType[]>([]);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
     const fetchPageData = async () => {
-      const events = await Event.filter({ featured: true }, '-date', 3);
+      const allEvents = await Event.list('-date');
+      const events = allEvents.filter((event: any) => event.featured).slice(0, 3);
       setFeaturedEvents(events);
-      const testimonials = await Testimonial.filter({ featured: true, approved: true }, '-created_date', 3);
+      const allTestimonials = await TestimonialService.list();
+      const testimonials = allTestimonials.filter((testimonial: any) => testimonial.featured && testimonial.approved).slice(0, 3);
       setRecentTestimonials(testimonials);
     };
     fetchPageData();
@@ -62,12 +64,12 @@ export default function Home() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="mt-8 flex flex-wrap justify-center gap-4"
           >
-            <Button asChild size="lg" className="bg-accent-gold text-black hover:bg-yellow-500 shadow-lg">
+            <Button asChild className="bg-accent-gold text-black hover:bg-yellow-500 shadow-lg px-6 py-3 text-lg">
               <Link to={createPageUrl("Donate")}>
                 <Heart className="mr-2 h-5 w-5" /> Give Generously
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-black">
+            <Button asChild className="text-white border-white hover:bg-white hover:text-black">
               <Link to={createPageUrl("Events")}>
                 <Calendar className="mr-2 h-5 w-5" /> View Events
               </Link>

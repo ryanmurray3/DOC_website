@@ -34,4 +34,32 @@
     "content"
   ]
 }
-export {};
+
+export interface TestimonialType {
+  id: string;
+  content: string;
+  author_name: string;
+  role: string;
+  approved: boolean;
+}
+
+export const TestimonialService = {
+  async list(): Promise<TestimonialType[]> {
+    return [
+      {
+        id: "t1",
+        content: "This church changed my life!",
+        author_name: "Jane Doe",
+        role: "Volunteer",
+        approved: true
+      },
+      {
+        id: "t2",
+        content: "An amazing place to connect and grow.",
+        author_name: "John Smith",
+        role: "Member",
+        approved: true
+      }
+    ];
+  }
+};

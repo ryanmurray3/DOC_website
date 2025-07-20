@@ -1,14 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Testimonial } from '@/entities/Testimonial';
+import { TestimonialType, TestimonialService } from "@/Entities/Testimonial";
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, ChevronsDown } from 'lucide-react';
 
-function createTextTexture(text, author, width, height) {
-  const canvas = document.createElement('canvas');
+interface CreateTextTextureOptions {
+  text: string;
+  author: string;
+  width: number;
+  height: number;
+}
+
+function createTextTexture(
+  text: string,
+  author: string,
+  width: number,
+  height: number
+): THREE.Texture {
+  const canvas: HTMLCanvasElement = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
   const context = canvas.getContext('2d');
+  if (!context) {
+    // Return a blank texture if context is null
+    return new THREE.CanvasTexture(canvas);
+  }
   
   context.fillStyle = 'rgba(253, 246, 232, 0.9)'; // warm-cream
   context.fillRect(0, 0, width, height);
@@ -18,7 +34,7 @@ function createTextTexture(text, author, width, height) {
   context.textAlign = 'center';
   
   // Wrap text
-  const words = text.split(' ');
+  const words: string[] = text.split(' ');
   let line = '';
   let y = 50;
   const lineHeight = 30;
@@ -46,15 +62,19 @@ function createTextTexture(text, author, width, height) {
 }
 
 export default function ExperiencePage() {
-  const mountRef = useRef(null);
-  const [testimonials, setTestimonials] = useState([]);
+  const mountRef = useRef<HTMLDivElement>(null);
+  const [testimonials, setTestimonials] = useState<TestimonialType[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Testimonial.filter({ approved: true }).then(data => {
+   const fetchTestimonials = async () => {
+      setLoading(true);
+      const data = await TestimonialService.list();
       setTestimonials(data);
       setLoading(false);
-    });
+    };
+
+    fetchTestimonials();
   }, []);
 
   useEffect(() => {
@@ -95,7 +115,12 @@ export default function ExperiencePage() {
 
     // Mouse movement
     let mouseX = 0, mouseY = 0;
-    const handleMouseMove = (event) => {
+    interface MouseMoveEvent {
+      clientX: number;
+      clientY: number;
+    }
+
+    const handleMouseMove = (event: MouseMoveEvent): void => {
       mouseX = (event.clientX / window.innerWidth) * 2 - 1;
       mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     };

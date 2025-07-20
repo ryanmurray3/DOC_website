@@ -53,4 +53,32 @@
     "frequency"
   ]
 }
-export {};
+// src/Entities/Donation.ts
+
+export interface DonationType {
+  id: string;
+  name: string;
+  email: string;
+  amount: number;
+  message?: string;
+  recurring: boolean;
+  fund: string;
+}
+
+export const DonationService = {
+  async list(): Promise<DonationType[]> {
+    return [
+      {
+        id: "d1",
+        name: "Anna Grace",
+        email: "anna@example.com",
+        amount: 100,
+        message: "Keep up the great work!",
+        recurring: false,
+        fund: "missions"
+      }
+    ];
+  }
+};
+
+

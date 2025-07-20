@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Gallery } from "@/entities/Gallery";
+// Import both type and value if needed, or just the value if GalleryItem is a class/object
+import { GalleryService } from "@/Entities/Gallery";
+import { GalleryItem } from "@/Entities/Gallery";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/Dialog";
 import { motion } from "framer-motion";
 import { Tag, Loader2, Image as ImageIcon, Video as VideoIcon } from "lucide-react";
 
 const galleryCategories = ["all", "worship", "community", "outreach", "facilities", "special"];
 
 export default function GalleryPage() {
-  const [media, setMedia] = useState([]);
-  const [filteredMedia, setFilteredMedia] = useState([]);
+  const [media, setMedia] = useState<GalleryItem[]>([]);
+  const [filteredMedia, setFilteredMedia] = useState<GalleryItem[]>([]);
+  const [selectedMedia, setSelectedMedia] = useState<GalleryItem | null>(null);
   const [category, setCategory] = useState("all");
   const [loading, setLoading] = useState(true);
-  const [selectedMedia, setSelectedMedia] = useState(null);
+  
 
   useEffect(() => {
     const fetchMedia = async () => {
       setLoading(true);
-      const allMedia = await Gallery.list('-event_date');
+      const allMedia = await GalleryService.list();
       setMedia(allMedia);
       setFilteredMedia(allMedia);
       setLoading(false);
@@ -52,7 +55,7 @@ export default function GalleryPage() {
             <Tag className="w-5 h-5 text-stone-500" />
             <Select value={category} onValueChange={setCategory}>
               <SelectTrigger className="w-[180px] bg-white">
-                <SelectValue placeholder="Filter by category" />
+                <SelectValue>Filter by category</SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {galleryCategories.map(cat => (

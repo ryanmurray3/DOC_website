@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Event } from "@/entities/Event";
-import { Button } from "@/components/ui/button";
+import { EventType, EventService } from "@/Entities/Event";
+import { Event } from "@/Entities/Event";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, Clock, MapPin, Tag, Loader2 } from "lucide-react";
@@ -9,15 +9,16 @@ import { motion } from "framer-motion";
 const eventCategories = ["all", "worship", "community", "outreach", "education", "special"];
 
 export default function Events() {
-  const [events, setEvents] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
-  const [category, setCategory] = useState("all");
-  const [loading, setLoading] = useState(true);
+  const [events, setEvents] = useState<EventType[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<EventType[]>([]);
+  const [category, setCategory] = useState<string>("all");
+  const [loading, setLoading] = useState<boolean>(true);
+
 
   useEffect(() => {
     const fetchEvents = async () => {
       setLoading(true);
-      const allEvents = await Event.list('-date');
+      const allEvents = await EventService.list('-date'); // ← return type: Promise<EventType[]>
       setEvents(allEvents);
       setFilteredEvents(allEvents);
       setLoading(false);
