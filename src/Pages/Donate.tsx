@@ -18,7 +18,20 @@ interface DonationType {
   icon: React.ElementType;
   description: string;
 }
+const donationTypes: DonationType[] = [
+  { value: "general", label: "General", icon: Heart, description: "Support our general operations." },
+  { value: "building", label: "Building", icon: Building, description: "Contribute to our infrastructure." },
+  { value: "outreach", label: "Outreach", icon: Users, description: "Help us reach more people." },
+  { value: "education", label: "Education", icon: BookOpen, description: "Support our educational programs." },
+  { value: "emergency", label: "Emergency", icon: AlertCircle, description: "Assist in emergency situations." }
+];
 
-export default function Donate() {
-// ... keep existing code
+export default function DonatePage() {
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl font-bold">Donate</h1>
+      <p className="mt-4">Thank you for your generous support.</p>
+      {/* Add form or data as needed */}
+    </div>
+  );
 }

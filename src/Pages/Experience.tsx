@@ -21,42 +21,56 @@ function createTextTexture(
   canvas.width = width;
   canvas.height = height;
   const context = canvas.getContext('2d');
+  const scale = window.devicePixelRatio || 1;
   if (!context) {
     // Return a blank texture if context is null
     return new THREE.CanvasTexture(canvas);
   }
+  context.scale(scale, scale);
+  // canvas.width = width * scale;
+  // canvas.height = height * scale;
+
   
-  context.fillStyle = 'rgba(253, 246, 232, 0.9)'; // warm-cream
+  context.fillStyle = 'rgba(250, 171, 12, 0.02)'; // warm-cream
   context.fillRect(0, 0, width, height);
   
-  context.fillStyle = '#6B1423'; // deep-burgundy
-  context.font = '24px serif';
+  context.fillStyle = '#000000ff'; // deep-burgundy
+  context.font = '48px serif';
   context.textAlign = 'center';
+  context.shadowOffsetY = 2;
+  context.shadowColor = 'rgba(255, 255, 255, 1)';
+  context.fillText(text, width / 2, height / 3); // center
+  
+  
   
   // Wrap text
   const words: string[] = text.split(' ');
   let line = '';
-  let y = 50;
-  const lineHeight = 30;
-  const maxWidth = width - 40;
+  let y = height / 3; // start drawing roughly 1/3 from the top
+  const lineHeight = -60;
+  const maxWidth = width * 0.9; // 90% of canvas width for margin
   
-  for(let n = 0; n < words.length; n++) {
+  for (let n = 0; n < words.length; n++) {
     const testLine = line + words[n] + ' ';
     const metrics = context.measureText(testLine);
-    const testWidth = metrics.width;
-    if (testWidth > maxWidth && n > 0) {
-      context.fillText(line, width/2, y);
+    if (metrics.width > maxWidth && line !== '') {
+      context.fillText(line, width / 2, y);
       line = words[n] + ' ';
       y += lineHeight;
     } else {
       line = testLine;
     }
   }
-  context.fillText(line, width/2, y);
+// Draw remaining line
+context.fillText(line.trim(), width / 2, y);
 
-  context.font = 'bold 20px sans-serif';
-  context.fillStyle = '#D4AF37'; // accent-gold
+  context.font = 'bold 36px sans-serif';
+  context.fillStyle = 'rgba(250, 171, 12, 0.02)'; // accent-gold
   context.fillText(`- ${author}`, width/2, y + 40);
+
+  // context.strokeStyle = 'blue';
+  // context.lineWidth = 10;
+  // context.strokeRect(0, 0, width, height);
 
   return new THREE.CanvasTexture(canvas);
 }
@@ -66,16 +80,50 @@ export default function ExperiencePage() {
   const [testimonials, setTestimonials] = useState<TestimonialType[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-   const fetchTestimonials = async () => {
-      setLoading(true);
-      const data = await TestimonialService.list();
-      setTestimonials(data);
-      setLoading(false);
-    };
+  //uncomment to fetch testimonials when real data is available
+  // useEffect(() => {
+  //  const fetchTestimonials = async () => {
+  //     setLoading(true);
+  //     const data = await TestimonialService.list();
+  //     setTestimonials(data);
+  //     setLoading(false);
+  //   };
 
-    fetchTestimonials();
-  }, []);
+  //   fetchTestimonials();
+  // }, []);
+
+  useEffect(() => {
+  const fakeTestimonials: TestimonialType[] = [
+    {
+      id: '1',
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      author_name: "John Doe",
+      role: "Member",
+      featured: true,
+      approved: true,
+    },
+    {
+      id: '2',
+      content: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+      author_name: "Jane Smith",
+      role: "Volunteer",
+      featured: true,
+      approved: true,
+    },
+    {
+      id: '3',
+      content: "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains.",
+      author_name: "Father Julian",
+      role: "Founder",
+      featured: true,
+      approved: true,
+    },
+  ];
+
+  setLoading(false);
+  setTestimonials(fakeTestimonials);
+}, []);
+
 
   useEffect(() => {
     if (loading || !mountRef.current || testimonials.length === 0) return;
@@ -98,9 +146,9 @@ export default function ExperiencePage() {
     // Testimonial Meshes
     const testimonialGroup = new THREE.Group();
     testimonials.forEach((testimonial, i) => {
-      const texture = createTextTexture(`"${testimonial.content}"`, testimonial.author_name, 512, 256);
+      const texture = createTextTexture(`"${testimonial.content}"`, testimonial.author_name, 3840, 1920);// adjust size as needed
       const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
-      const geometry = new THREE.PlaneGeometry(20, 10);
+      const geometry = new THREE.PlaneGeometry(70, 35);
       const mesh = new THREE.Mesh(geometry, material);
 
       mesh.position.set(

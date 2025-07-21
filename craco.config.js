@@ -1,16 +1,9 @@
-const CracoAlias = require("craco-alias");
+const path = require("path");
 
 module.exports = {
-  plugins: [
-    {
-      plugin: CracoAlias,
-      options: {
-        source: "tsconfig",
-        baseUrl: "./src",
-        tsConfigPath: "./tsconfig.paths.json",
-      },
+  webpack: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
     },
-  ],
+  },
 };
-// This configuration file sets up path aliases for the project using Craco.
-// It allows for cleaner imports by defining custom paths in the tsconfig.paths.json file.

@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { Event } from "@/Entities/Event";
+import { EventMock, EventItem } from "@/Entities/Event";
 import { TestimonialService, TestimonialType } from "@/Entities/Testimonial";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -8,16 +8,18 @@ import { Heart, Calendar, Users, ArrowRight, Play, Pause, Sparkles, Quote } from
 import { Link } from "react-router-dom";
 import { createPageUrl } from "@/libs/utils";
 import { motion } from "framer-motion";
+import Header from "@/components/ui/Header";
+
 
 export default function Home() {
-  const [featuredEvents, setFeaturedEvents] = useState<Event[]>([]);
+  const [featuredEvents, setFeaturedEvents] = useState<EventItem[]>([]);
   const [recentTestimonials, setRecentTestimonials] = useState<TestimonialType[]>([]);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
     const fetchPageData = async () => {
-      const allEvents = await Event.list('-date');
+      const allEvents = await EventMock.list('-date');
       const events = allEvents.filter((event: any) => event.featured).slice(0, 3);
       setFeaturedEvents(events);
       const allTestimonials = await TestimonialService.list();
@@ -32,7 +34,9 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-warm-cream text-stone-800">
+  <>
+  <Header />
+    <div className="bg-warm-cream text-stone-800 dark:bg-zinc-900 dark:text-white">
       {/* Hero Section */}
       <motion.section 
         initial={{ opacity: 0 }}
@@ -48,7 +52,7 @@ export default function Home() {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight"
           >
-            Welcome to Sacred Unity
+            Congregation of the Blessed Sacrament 
           </motion.h1>
           <motion.p 
             initial={{ y: 20, opacity: 0 }}
@@ -56,8 +60,16 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-stone-200"
           >
-            A community dedicated to faith, fellowship, and service. Discover your purpose with us.
+            Belong entirely to God through love, entirely to your neighbor through a gracious charity, entirely to the divine Eucharist by the offering and sacrifice of your whole self. Bear with yourself in the patience of our Lord.  
           </motion.p>
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-stone-200"
+            style={{ fontStyle: 'italic' }}
+          >
+            - Father Julian Eymard</motion.p>
           <motion.div 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -81,9 +93,9 @@ export default function Home() {
       {/* Video Section */}
       <section className="py-20 md:py-32 bg-white">
         <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-deep-burgundy">Experience Our Message</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-deep-burgundy">The Feast of the Corpus Christi 2025</h2>
           <p className="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">
-            Watch our latest sermon and get a glimpse into the heart of our community.
+            Watch our feast of praise and worship celebration, where we come together to honor the Eucharist and deepen our faith through music and community.
           </p>
           <motion.div 
             whileHover={{ scale: 1.02 }}
@@ -175,5 +187,6 @@ export default function Home() {
         </section>
       )}
     </div>
+  </>
   );
 }

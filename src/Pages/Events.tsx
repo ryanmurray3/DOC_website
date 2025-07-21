@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { EventType, EventService } from "@/Entities/Event";
-import { Event } from "@/Entities/Event";
+import { EventItem, EventService } from "@/Entities/Event";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, Clock, MapPin, Tag, Loader2 } from "lucide-react";
@@ -9,8 +8,8 @@ import { motion } from "framer-motion";
 const eventCategories = ["all", "worship", "community", "outreach", "education", "special"];
 
 export default function Events() {
-  const [events, setEvents] = useState<EventType[]>([]);
-  const [filteredEvents, setFilteredEvents] = useState<EventType[]>([]);
+  const [events, setEvents] = useState<EventItem[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<EventItem[]>([]);
   const [category, setCategory] = useState<string>("all");
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -35,7 +34,7 @@ export default function Events() {
   }, [category, events]);
 
   return (
-    <div className="bg-warm-cream min-h-screen">
+    <div className="bg-sky-950 min-h-screen">
       <header className="bg-deep-burgundy text-white py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <motion.h1 
