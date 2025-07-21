@@ -46,14 +46,18 @@ export default function Home() {
       >
         <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=2070&auto=format&fit=crop')" }}></div>
         <div className="relative z-10 p-8 max-w-4xl">
-          <motion.h1 
+          <motion.div 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight"
-          >
-            Congregation of the Blessed Sacrament 
-          </motion.h1>
+            >
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight">
+              Congregation of the Blessed Sacrament
+            </h1>
+            <p className="text-2xl md:text-3xl lg:text-4xl font-medium text-accent-gold">
+              San Antonio, TX
+            </p>
+          </motion.div>
           <motion.p 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
