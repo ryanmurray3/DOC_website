@@ -160,6 +160,19 @@ export default function Home() {
         </section>
       )}
 
+      {/* Gallery Section */}
+      <section className="py-20 md:py-24 bg-deep-burgundy">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold text-smoke-white">Gallery</h2>
+          <p className="mt-3 text-lg text-stone-600">Explore our community through photos and videos.</p>
+          <Button asChild className="mt-8 bg-accent-gold text-black hover:bg-yellow-500 shadow-lg px-6 py-3 text-lg">
+            <Link to={createPageUrl("Gallery")}>
+              <Sparkles className="mr-2 h-5 w-5" /> View Gallery
+            </Link>
+          </Button>
+        </div>
+      </section>
+
       {/* Testimonials */}
       {recentTestimonials.length > 0 && (
         <section className="py-20 md:py-24 bg-white">

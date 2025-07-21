@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Heart, Building, Users, BookOpen, AlertCircle, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
-// ... keep existing code (DonationFormData interface)
+
 
 interface DonationType {
   value: string;
