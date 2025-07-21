@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, Clock, MapPin, Tag, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
+import Header from "@/components/ui/Header";
+
 
 const eventCategories = ["all", "worship", "community", "outreach", "education", "special"];
 
@@ -34,6 +36,23 @@ export default function Events() {
   }, [category, events]);
 
   return (
+    <>
+      <Header />
+      <div className="bg-warm-cream text-stone-800 dark:bg-zinc-900 dark:text-white">
+        <motion.section 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="py-16 px-6 max-w-7xl mx-auto"
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-3xl font-bold">Events</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-4">Find opportunities for worship, community connection, outreach, and learning. We look forward to seeing you.</p>
+            </CardContent>
+          </Card>
     <div className="bg-sky-950 min-h-screen">
       <header className="bg-deep-burgundy text-white py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
@@ -120,5 +139,8 @@ export default function Events() {
         )}
       </main>
     </div>
+        </motion.section>
+      </div>
+    </>
   );
 }

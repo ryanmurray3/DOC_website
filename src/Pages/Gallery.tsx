@@ -6,6 +6,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/Dialog";
 import { motion } from "framer-motion";
 import { Tag, Loader2, Image as ImageIcon, Video as VideoIcon } from "lucide-react";
+import Header from "@/components/ui/Header";
+
 
 const galleryCategories = ["all", "worship", "community", "outreach", "facilities", "special"];
 
@@ -37,6 +39,8 @@ export default function GalleryPage() {
   }, [category, media]);
 
   return (
+    <>
+      <Header />
     <div className="bg-warm-cream min-h-screen">
       <header className="bg-deep-burgundy text-white py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
@@ -126,5 +130,6 @@ export default function GalleryPage() {
         </DialogContent>
       </Dialog>
     </div>
+  </>
   );
 }

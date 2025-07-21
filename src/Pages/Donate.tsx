@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DonationService } from "@/Entities/Donation";
+import { DonationSchema, DonationService } from "@/Entities/Donation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,29 +9,36 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Heart, Building, Users, BookOpen, AlertCircle, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import Header from "@/components/ui/Header";
+import DonationForm from "@/components/ui/DonationForm"; // or "@/components/DonationForm"
 
-
-
-interface DonationType {
-  value: string;
-  label: string;
-  icon: React.ElementType;
-  description: string;
-}
-const donationTypes: DonationType[] = [
-  { value: "general", label: "General", icon: Heart, description: "Support our general operations." },
-  { value: "building", label: "Building", icon: Building, description: "Contribute to our infrastructure." },
-  { value: "outreach", label: "Outreach", icon: Users, description: "Help us reach more people." },
-  { value: "education", label: "Education", icon: BookOpen, description: "Support our educational programs." },
-  { value: "emergency", label: "Emergency", icon: AlertCircle, description: "Assist in emergency situations." }
-];
 
 export default function DonatePage() {
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold">Donate</h1>
-      <p className="mt-4">Thank you for your generous support.</p>
-      {/* Add form or data as needed */}
-    </div>
+    <>
+      <Header />
+      <div className="bg-warm-cream text-stone-800 dark:bg-zinc-900 dark:text-white">
+        <motion.section 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="py-16 px-6 max-w-7xl mx-auto"
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-3xl font-bold">Donate</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="mb-4">Your support helps us continue our mission.</p>
+            </CardContent>
+          </Card>
+
+          {/* ✅ Here's where the donation form is rendered */}
+          <div className="mt-12 max-w-2xl mx-auto">
+            <DonationForm />
+          </div>
+        </motion.section>
+      </div>
+    </>
   );
 }

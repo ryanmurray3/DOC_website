@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import { TestimonialType, TestimonialService } from "@/Entities/Testimonial";
 import { motion } from 'framer-motion';
 import { Sparkles, Loader2, ChevronsDown } from 'lucide-react';
+import Header from "@/components/ui/Header";
+
 
 interface CreateTextTextureOptions {
   text: string;
@@ -211,7 +213,41 @@ export default function ExperiencePage() {
   }, [loading, testimonials]);
 
   return (
-    <div className="relative w-full h-screen bg-deep-burgundy">
+    <>
+      <Header />
+      <div className="bg-warm-cream text-stone-800 dark:bg-zinc-900 dark:text-white">
+        <motion.section 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative w-full h-screen overflow-hidden"
+        >
+          <div ref={mountRef} className="absolute inset-0 z-0" />
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-warm-cream p-8 pointer-events-none">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+              <Sparkles className="w-16 h-16 text-accent-gold" />
+              <h1 className="mt-4 text-4xl md:text-6xl font-extrabold">The Experience</h1>
+              <p className="mt-4 text-lg md:text-xl max-w-2xl">Move your mouse to explore the stories and reflections from our community members.</p>
+            </motion.div>
+            
+            {loading && (
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <Loader2 className="w-12 h-12 animate-spin text-accent-gold" />
+              </div>
+            )}
+
+            <motion.div
+                className="absolute bottom-10"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 1.5, repeat: Infinity, repeatType: 'reverse' }}
+            >
+                <ChevronsDown className="w-8 h-8 text-warm-cream/50" />
+            </motion.div>
+          </div>
+        </motion.section>
+      </div>
+    {/* <div className="relative w-full h-screen bg-deep-burgundy">
       <div ref={mountRef} className="absolute inset-0 z-0" />
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center text-warm-cream p-8 pointer-events-none">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
@@ -235,6 +271,7 @@ export default function ExperiencePage() {
             <ChevronsDown className="w-8 h-8 text-warm-cream/50" />
         </motion.div>
       </div>
-    </div>
+    </div> */}
+    </>
   );
 }
