@@ -16,12 +16,12 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-deep-burgundy dark:text-white font-medium">
-          <Link to={createPageUrl("")}>Home</Link>
-          <Link to={createPageUrl("About")}>About</Link>
-          <Link to={createPageUrl("Events")}>Events</Link>
-          <Link to={createPageUrl("Gallery")}>Gallery</Link>
-          <Link to={createPageUrl("Experience")}>Experience</Link>
-          <Link to={createPageUrl("Donate")}>Donate</Link>
+          <Link to={createPageUrl("")}>Home </Link>
+          <Link to={createPageUrl("About")}>About </Link>
+          <Link to={createPageUrl("Events")}>Events </Link>
+          <Link to={createPageUrl("Gallery")}>Gallery </Link>
+          <Link to={createPageUrl("Experience")}>Experience </Link>
+          <Link to={createPageUrl("Donate")}>Donate </Link>
           <Link to={createPageUrl("Contact")}>Contact</Link>
         </nav>
 
@@ -33,15 +33,22 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {menuOpen && (
-        <nav className="md:hidden bg-white dark:bg-zinc-800 text-deep-burgundy dark:text-white font-medium py-4 px-6 space-y-3">
-          <Link to={createPageUrl("Home")} onClick={() => setMenuOpen(false)}>Home</Link>
-          <Link to={createPageUrl("Events")} onClick={() => setMenuOpen(false)}>Events</Link>
-          <Link to={createPageUrl("Donate")} onClick={() => setMenuOpen(false)}>Donate</Link>
-          <Link to={createPageUrl("Experience")} onClick={() => setMenuOpen(false)}>Experience</Link>
-        </nav>
-      )}
+  <div className="relative z-50">
+    <div className="absolute right-4 top-12 bg-white dark:bg-zinc-800 rounded-lg shadow-md p-4 w-48">
+      <ul className="space-y-2 text-deep-burgundy dark:text-white">
+        <li><Link to={createPageUrl("Home")} onClick={() => setMenuOpen(false)}>Home</Link></li>
+        <li><Link to={createPageUrl("About")} onClick={() => setMenuOpen(false)}>About</Link></li>
+        <li><Link to={createPageUrl("Events")} onClick={() => setMenuOpen(false)}>Events</Link></li>
+        <li><Link to={createPageUrl("Gallery")} onClick={() => setMenuOpen(false)}>Gallery</Link></li>
+        <li><Link to={createPageUrl("Experience")} onClick={() => setMenuOpen(false)}>Experience</Link></li>
+        <li><Link to={createPageUrl("Donate")} onClick={() => setMenuOpen(false)}>Donate</Link></li>
+        <li><Link to={createPageUrl("Contact")} onClick={() => setMenuOpen(false)}>Contact</Link></li>
+      </ul>
+    </div>
+  </div>
+)}
+
     </header>
   );
 }
