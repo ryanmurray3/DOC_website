@@ -16,7 +16,7 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-deep-burgundy dark:text-white font-medium">
-          <Link to={createPageUrl("Home")}>Home</Link>
+          <Link to={createPageUrl("")}>Home</Link>
           <Link to={createPageUrl("About")}>About</Link>
           <Link to={createPageUrl("Events")}>Events</Link>
           <Link to={createPageUrl("Gallery")}>Gallery</Link>
