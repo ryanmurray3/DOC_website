@@ -16,7 +16,7 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex space-x-6 text-deep-burgundy dark:text-white font-medium">
-          <Link to={createPageUrl("")}>Home </Link>
+          <Link to={createPageUrl("home")}>Home </Link>
           <Link to={createPageUrl("About")}>About </Link>
           <Link to={createPageUrl("Events")}>Events </Link>
           <Link to={createPageUrl("Gallery")}>Gallery </Link>
@@ -37,7 +37,7 @@ export default function Header() {
   <div className="relative z-50">
     <div className="absolute right-4 top-12 bg-white dark:bg-zinc-800 rounded-lg shadow-md p-4 w-48">
       <ul className="space-y-2 text-deep-burgundy dark:text-white">
-        <li><Link to={createPageUrl("Home")} onClick={() => setMenuOpen(false)}>Home</Link></li>
+        <li><Link to={createPageUrl("home")} onClick={() => setMenuOpen(false)}>Home</Link></li>
         <li><Link to={createPageUrl("About")} onClick={() => setMenuOpen(false)}>About</Link></li>
         <li><Link to={createPageUrl("Events")} onClick={() => setMenuOpen(false)}>Events</Link></li>
         <li><Link to={createPageUrl("Gallery")} onClick={() => setMenuOpen(false)}>Gallery</Link></li>
