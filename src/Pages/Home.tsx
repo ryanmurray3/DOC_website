@@ -9,6 +9,17 @@ import { Link } from "react-router-dom";
 import { createPageUrl } from "@/libs/utils";
 import { motion } from "framer-motion";
 import Header from "@/components/ui/Header";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import { galleryImages } from "@/Entities/galleryData";
+
+
+import { GalleryImage } from "@/Entities/galleryData";
 
 
 export default function Home() {
@@ -97,7 +108,7 @@ export default function Home() {
       {/* Video Section */}
       <section className="py-20 md:py-32 bg-white">
         <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-deep-burgundy">The Feast of the Corpus Christi 2025</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-red-950">The Feast of the Corpus Christi 2025</h2>
           <p className="mt-4 text-lg text-stone-600 max-w-3xl mx-auto">
             Watch our feast of praise and worship celebration, where we come together to honor the Eucharist and deepen our faith through music and community.
           </p>
@@ -166,16 +177,45 @@ export default function Home() {
 
       {/* Gallery Section */}
       <section className="py-20 md:py-24 bg-deep-burgundy">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-smoke-white">Gallery</h2>
-          <p className="mt-3 text-lg text-stone-600">Explore our community through photos and videos.</p>
-          <Button asChild className="mt-8 bg-accent-gold text-black hover:bg-yellow-500 shadow-lg px-6 py-3 text-lg">
-            <Link to={createPageUrl("Gallery")}>
-              <Sparkles className="mr-2 h-5 w-5" /> View Gallery
-            </Link>
-          </Button>
-        </div>
-      </section>
+  <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+    <h2 className="text-3xl md:text-4xl font-bold text-smoke-white">Gallery</h2>
+    <p className="mt-3 text-lg text-stone-300">Explore our community through photos and videos.</p>
+
+    {/* ✨ Image Carousel */}
+    <Swiper
+      modules={[Navigation, Pagination, Autoplay]}
+      spaceBetween={16}
+      slidesPerView={1}
+      navigation
+      pagination={{ clickable: true }}
+      autoplay={{ delay: 4000 }}
+      className="mt-10 max-w-5xl mx-auto"
+      breakpoints={{
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 },
+      }}
+    >
+      {galleryImages.map((image) => (
+        <SwiperSlide key={image.id}>
+          <img
+            src={image.url}
+            alt={image.alt}
+            className="rounded-xl shadow-lg object-cover w-full h-64"
+          />
+        </SwiperSlide>
+      ))}
+    </Swiper>
+
+    {/* View Full Gallery Button */}
+    <Button asChild className="mt-12 bg-accent-gold text-black hover:bg-yellow-500 shadow-lg px-6 py-3 text-lg">
+      <Link to={createPageUrl("Gallery")}>
+        <Sparkles className="mr-2 h-5 w-5" /> View Gallery
+      </Link>
+    </Button>
+  </div>
+</section>
+
 
       {/* Testimonials */}
       {recentTestimonials.length > 0 && (

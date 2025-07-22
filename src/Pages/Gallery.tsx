@@ -7,6 +7,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { motion } from "framer-motion";
 import { Tag, Loader2, Image as ImageIcon, Video as VideoIcon } from "lucide-react";
 import Header from "@/components/ui/Header";
+import { galleryImages } from "@/Entities/galleryData";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 
 
 const galleryCategories = ["all", "worship", "community", "outreach", "facilities", "special"];
@@ -42,7 +51,7 @@ export default function GalleryPage() {
     <>
       <Header />
     <div className="bg-warm-cream min-h-screen">
-      <header className="bg-deep-burgundy text-white py-16 md:py-24">
+      <header className="bg-red-950 text-white py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-4xl md:text-5xl font-extrabold">
             Moments & Memories
@@ -52,6 +61,31 @@ export default function GalleryPage() {
           </motion.p>
         </div>
       </header>
+
+      <Swiper
+        modules={[Navigation, Pagination, Autoplay]}
+        spaceBetween={16}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 4000 }}
+        className="mt-10 max-w-5xl mx-auto"
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+      >
+        {galleryImages.map((image) => (
+          <SwiperSlide key={image.id}>
+            <img
+              src={image.url}
+              alt={image.alt}
+              className="rounded-xl shadow-lg object-cover w-full h-64"
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       <main className="max-w-7xl mx-auto px-6 lg:px-8 py-12 md:py-16">
         <div className="flex justify-end mb-8">

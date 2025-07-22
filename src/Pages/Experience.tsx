@@ -149,7 +149,14 @@ export default function ExperiencePage() {
     const testimonialGroup = new THREE.Group();
     testimonials.forEach((testimonial, i) => {
       const texture = createTextTexture(`"${testimonial.content}"`, testimonial.author_name, 3840, 1920);// adjust size as needed
-      const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+      const material = new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.DoubleSide,
+        color: new THREE.Color('#ffc35cff'), // Soft cream tint or any hex
+        transparent: true,
+        opacity: 1.0, // Adjust if needed
+    });
+
       const geometry = new THREE.PlaneGeometry(70, 35);
       const mesh = new THREE.Mesh(geometry, material);
 
@@ -238,7 +245,7 @@ export default function ExperiencePage() {
 
             <motion.div
                 className="absolute bottom-10"
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: -20, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1, duration: 1.5, repeat: Infinity, repeatType: 'reverse' }}
             >
